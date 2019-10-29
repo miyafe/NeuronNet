@@ -14,7 +14,7 @@ include_directories("/usr/local/include" ${CMAKE_SOURCE_DIR}/include)
 link_directories(${CMAKE_SOURCE_DIR}/lib)
 
 
-add_executable(NeruronNet src/main.cpp src/network.cpp src/neuron.cpp src/random.cpp src/simulation.cpp)
+add_executable(NeuronNet src/main.cpp src/network.cpp src/neuron.cpp src/random.cpp src/simulation.cpp)
 if (test)   
 enable_testing()   
 find_package(GTest)   
