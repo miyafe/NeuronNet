@@ -93,25 +93,23 @@ std::set<size_t> Network::step(const std::vector<double>& thalamic_input){
 
 	std::set<size_t> index_firing_neurons;
 	for(size_t i(0); i<neurons.size(); ++i){								
-
-			double sum_intensity_exc (0.0);
-			double sum_intensity_inhib (0.0);
-			std::vector<std::pair<size_t, double>> tab = neighbors(i);
-			for (auto neuro : tab){
-				if (neurons[neuro.first].firing()){ 
-					if (neurons[neuro.first].is_inhibitory()){
-						sum_intensity_inhib += neuro.second;
-					}else{
-						sum_intensity_exc += neuro.second;
-					}
+		double sum_intensity_exc (0.0);
+		double sum_intensity_inhib (0.0);
+		std::vector<std::pair<size_t, double>> tab = neighbors(i);
+		for (auto neuro : tab){
+			if (neurons[neuro.first].firing()){ 
+				if (neurons[neuro.first].is_inhibitory()){
+					sum_intensity_inhib += neuro.second;
+				}else{
+					sum_intensity_exc += neuro.second;
 				}
 			}
-			if (neurons[i].is_inhibitory()){
+		}
+		if (neurons[i].is_inhibitory()){
 			neurons[i].input (0.4*thalamic_input[i] + 0.5*sum_intensity_exc + sum_intensity_inhib);	
-		} else {
+		}else {		
 			neurons[i].input (thalamic_input[i] + 0.5*sum_intensity_exc + sum_intensity_inhib);
 		}
-
 		if (neurons[i].firing()){
 			index_firing_neurons.insert(i);
 			neurons[i].reset();
@@ -119,7 +117,6 @@ std::set<size_t> Network::step(const std::vector<double>& thalamic_input){
 			neurons[i].step();
 		}
 	}
-	
 	return index_firing_neurons;
 }
 
