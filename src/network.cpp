@@ -173,7 +173,7 @@ void Network::print_traj(const int time, const std::map<std::string, size_t> &_n
 std::vector<std::pair<size_t, double> > Network::neighbors(const size_t& n) const {
 	std::vector<std::pair<size_t, double>> tab;
 	
-	for(std::map<std::pair<size_t, size_t>, double>::const_iterator i=links.lower_bound({n, 0}); i!=links.end() and ((i -> first).first)== n; ++i){
+	for(std::map<std::pair<size_t, size_t>, double>::const_iterator i=links.lower_bound({n, 0}); i!=links.cend() and ((i -> first).first)== n; ++i){
 		std::pair<size_t, double> insert_neurons ((i->first).second, i-> second);
 		tab.push_back(insert_neurons);
 	}
