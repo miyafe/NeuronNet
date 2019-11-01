@@ -70,15 +70,12 @@ std::vector<double> Network::potentials() const {
 }
 
 std::pair<size_t, double> Network::degree(const size_t& n) const{
+	std::vector<std::pair<size_t, double>> neighb = neighbors(n);
 	double totalIntensity (0);
-	int nb_link(0);
-	for (auto& link: links){
-		if (link.first.first == n){				
-			++nb_link;
-			totalIntensity += link.second;
-		}
+	for (auto x: neighb){
+		totalIntensity += x.second;
 	}
-	return std::make_pair(nb_link, totalIntensity);
+	return std::make_pair(neighb.size(), totalIntensity);
 }
 
 
@@ -106,7 +103,7 @@ std::set<size_t> Network::step(const std::vector<double>& thalamic_input){
 			}
 		}
 		if (neurons[i].is_inhibitory()){
-			neurons[i].input (0.4*thalamic_input[i] + 0.5*sum_intensity_exc + sum_intensity_inhib);	
+			neurons[i].input(0.4*thalamic_input[i] + 0.5*sum_intensity_exc + sum_intensity_inhib);	
 		}else {		
 			neurons[i].input (thalamic_input[i] + 0.5*sum_intensity_exc + sum_intensity_inhib);
 		}
